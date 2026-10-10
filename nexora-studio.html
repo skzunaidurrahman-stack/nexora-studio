@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08090c">
+<title>NEXORA STUDIO — Your Next Website Starts Here</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #08090c;
+  --surface: #101217;
+  --surface-2: #151820;
+  --surface-3: #1b1e27;
+  --text: #f4f5f8;
+  --muted: #969ba8;
+  --subtle: #6d7280;
+  --line: rgba(255,255,255,.105);
+  --line-strong: rgba(255,255,255,.19);
+  --blue: #8ba8ff;
+  --blue-bright: #b2c3ff;
+  --purple: #a98bff;
+  --mint: #93e8cc;
+  --radius: 22px;
+  --max: 1240px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: -.015em; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+button { color: inherit; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+#app { min-height: 100vh; width: 100%; overflow: hidden; background-color: light-dark(#0a0b0f, #08090c); color: light-dark(#f4f5f8, #f4f5f8); border-radius: 0; }
+@media (prefers-color-scheme: light) {
+  :root { color-scheme: light dark; }
+}
+.wrap { width: min(var(--max), calc(100% - 48px)); margin-inline: auto; }
+.eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 11px; letter-spacing: .17em; text-transform: uppercase; font-weight: 750; color: var(--muted); }
+.eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 14px rgba(147,232,204,.75); }
+.section { padding: 104px 0; position: relative; }
+.section-head { display: flex; justify-content: space-between; align-items: end; gap: 28px; margin-bottom: 34px; }
+.section-head h2 { margin: 12px 0 0; max-width: 760px; font-size: clamp(34px, 5vw, 58px); line-height: .99; letter-spacing: -.065em; font-weight: 650; }
+.section-head p { color: var(--muted); line-height: 1.7; max-width: 390px; margin: 0 0 4px; font-size: 14px; }
+.gradient-text { background: linear-gradient(110deg,#fff 5%,#c5d0ff 47%,#b1a1ff 80%,#7ce6d3 115%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.button { border: 1px solid transparent; border-radius: 999px; padding: 13px 19px; min-height: 46px; display: inline-flex; justify-content: center; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease; white-space: nowrap; }
+.button:hover { transform: translateY(-2px); }
+.button.primary { color: #080a10; background: #f2f4ff; box-shadow: 0 7px 28px rgba(163,180,255,.13); }
+.button.primary:hover { background: #fff; box-shadow: 0 8px 32px rgba(163,180,255,.25); }
+.button.secondary { background: rgba(255,255,255,.055); border-color: var(--line-strong); color: var(--text); }
+.button.secondary:hover { background: rgba(255,255,255,.095); border-color: rgba(177,193,255,.45); }
+.button.quiet { background: transparent; border-color: var(--line); color: var(--muted); }
+.button.small { min-height: 36px; padding: 8px 12px; font-size: 11px; }
+.button.full { width: 100%; }
+.arrow { display: inline-block; transition: transform .2s ease; }
+.button:hover .arrow { transform: translateX(3px); }
+.topbar { position: sticky; top: 0; z-index: 100; background: rgba(8,9,12,.77); border-bottom: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+.nav { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.brand { display: inline-flex; gap: 11px; align-items: center; font-size: 15px; letter-spacing: -.045em; font-weight: 850; }
+.brand-mark { width: 28px; height: 28px; border-radius: 9px; border: 1px solid rgba(190,202,255,.4); background: linear-gradient(145deg,rgba(171,191,255,.24),rgba(141,118,255,.06)); display: grid; place-items: center; position: relative; overflow: hidden; }
+.brand-mark:before { content: ""; width: 11px; height: 11px; border: 1.5px solid #d6deff; transform: rotate(45deg); box-shadow: 0 0 14px #8faaff; }
+.brand span:last-child { color: #f4f5f8; }
+.brand em { color: #aab9ff; font-style: normal; font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 27px; margin-left: auto; margin-right: auto; }
+.nav-links a { color: #a4a8b4; font-size: 12px; transition: color .2s; }
+.nav-links a:hover { color: #fff; }
+.nav-actions { display: flex; gap: 10px; align-items: center; }
+.menu-toggle { display: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; }
+.hero { min-height: 710px; padding: 84px 0 82px; position: relative; isolation: isolate; overflow: hidden; background: radial-gradient(ellipse at 73% 38%,rgba(73,93,180,.15),transparent 35%), radial-gradient(ellipse at 18% 72%,rgba(84,61,153,.11),transparent 36%), #08090c; }
+.hero:before { content: ""; position: absolute; z-index: -2; inset: 0; opacity: .4; background-image: linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(to bottom,transparent,#000 20%,#000 68%,transparent); }
+.hero:after { content: ""; position: absolute; z-index: -1; top: 12%; right: 3%; width: 620px; height: 620px; border-radius: 50%; background: radial-gradient(circle at 33% 28%,rgba(192,205,255,.22),rgba(97,112,192,.09) 18%,rgba(18,22,45,.08) 41%,transparent 70%); filter: blur(1px); }
+.hero-grid { display: grid; grid-template-columns: .93fr 1.07fr; align-items: center; gap: 22px; }
+.hero-copy { position: relative; z-index: 2; padding: 36px 0 28px; }
+.hero-badge { display: inline-flex; gap: 9px; align-items: center; padding: 7px 11px; border: 1px solid rgba(255,255,255,.13); background: rgba(255,255,255,.045); border-radius: 99px; color: #b9bfce; font-size: 10px; letter-spacing: .06em; margin-bottom: 28px; }
+.hero-badge .spark { color: #b4c0ff; font-size: 14px; }
+.hero h1 { font-size: clamp(53px,7.3vw,91px); line-height: .92; letter-spacing: -.082em; font-weight: 650; max-width: 680px; margin: 0; }
+.hero h1 span { display: block; }
+.hero-copy > p { color: #9da3b1; font-size: 15px; line-height: 1.8; max-width: 455px; margin: 25px 0 29px; }
+.hero-actions { display: flex; gap: 11px; flex-wrap: wrap; }
+.hero-proof { margin-top: 35px; display: flex; align-items: center; gap: 13px; color: #818796; font-size: 11px; }
+.proof-icons { display: flex; }
+.proof-icons i { width: 25px; height: 25px; border: 2px solid #090a0f; border-radius: 50%; margin-left: -6px; display: block; background: linear-gradient(145deg,#6e7fae,#232a43); }
+.proof-icons i:first-child { margin-left: 0; background: linear-gradient(145deg,#9ec6c6,#37465a); }
+.proof-icons i:nth-child(2) { background: linear-gradient(145deg,#d6b1e7,#644e91); }
+.proof-icons i:nth-child(3) { background: linear-gradient(145deg,#c7b68c,#5c503e); }
+.hero-visual { position: relative; height: 525px; perspective: 1000px; transform-style: preserve-3d; }
+.orbit { position: absolute; border: 1px solid rgba(161,177,255,.16); border-radius: 50%; transform: rotate(-22deg); pointer-events: none; }
+.orbit.one { width: 470px; height: 170px; top: 156px; left: 11%; box-shadow: 0 0 34px rgba(118,139,255,.03) inset; }
+.orbit.two { width: 520px; height: 260px; top: 113px; left: 8%; transform: rotate(54deg); border-color: rgba(174,151,255,.15); }
+.orbit.three { width: 490px; height: 230px; top: 143px; left: 5%; transform: rotate(-61deg); border-color: rgba(126,212,219,.12); }
+.core-orb { position: absolute; width: 245px; height: 245px; left: 29%; top: 105px; border-radius: 50%; background: radial-gradient(circle at 29% 23%,#d3dcff 0%,#8295e8 7%,#495a9f 20%,#151b35 46%,#090b14 67%,#030407 78%); box-shadow: inset -18px -25px 42px rgba(0,0,0,.85), inset 7px 6px 20px rgba(202,211,255,.32), 0 0 75px rgba(88,113,234,.3), 0 0 170px rgba(79,78,168,.12); animation: orbFloat 8s ease-in-out infinite; }
+.core-orb:before { content: ""; position: absolute; inset: 11px 15px 20px 9px; border-radius: 50%; border: 1px solid rgba(213,222,255,.24); transform: rotate(-36deg) scaleX(1.1); }
+.core-orb:after { content: ""; position: absolute; top: 21px; left: 39px; width: 51px; height: 19px; border-radius: 50%; background: rgba(223,230,255,.35); filter: blur(18px); transform: rotate(-38deg); }
+@keyframes orbFloat { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-13px) rotate(3deg); } }
+.float-panel { position: absolute; background: linear-gradient(145deg,rgba(31,35,49,.86),rgba(13,15,22,.79)); border: 1px solid rgba(198,207,255,.2); box-shadow: 0 25px 70px rgba(0,0,0,.44), inset 0 1px rgba(255,255,255,.06); backdrop-filter: blur(18px); border-radius: 14px; padding: 13px; animation: panelFloat 7s ease-in-out infinite; }
+@keyframes panelFloat { 0%,100% { transform: translateY(0) rotateY(-7deg) rotateX(3deg); } 50% { transform: translateY(-8px) rotateY(-3deg) rotateX(1deg); } }
+.panel-top { display: flex; align-items: center; justify-content: space-between; color: #a8afc2; font-size: 8px; letter-spacing: .13em; text-transform: uppercase; margin-bottom: 12px; }
+.panel-lights { display: flex; gap: 4px; }
+.panel-lights b { width: 4px; height: 4px; border-radius: 50%; background: #7784ae; }
+.mini-window { background: #0b0d15; border-radius: 7px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+.mini-window img { display: none; }
+.mini-hero { height: 93px; padding: 11px; display: flex; flex-direction: column; justify-content: center; background: radial-gradient(ellipse at 80% 10%,rgba(140,154,255,.55),transparent 44%),linear-gradient(130deg,#1b2441,#080b12 70%); }
+.mini-hero small { color: #a4b5ff; font-size: 6px; letter-spacing: .12em; }
+.mini-hero strong { font-size: 17px; line-height: .96; letter-spacing: -.06em; max-width: 102px; margin-top: 6px; color: white; }
+.mini-hero .mini-cta { display: block; width: 51px; height: 12px; margin-top: 9px; background: #d9e0ff; border-radius: 99px; }
+.panel-one { width: 214px; left: 2%; top: 81px; transform: rotateY(8deg) rotateX(2deg); }
+.panel-two { width: 187px; right: 0; top: 250px; animation-delay: -2s; }
+.panel-two .mini-hero { height: 76px; background: radial-gradient(ellipse at 70% 48%,#b6f1d2,transparent 22%),linear-gradient(150deg,#1d443e,#0b1316 66%); }
+.panel-two .mini-hero strong { font-size: 14px; }
+.panel-three { width: 206px; left: 14%; bottom: 18px; animation-delay: -4s; }
+.panel-three .mini-hero { height: 76px; background: radial-gradient(circle at 80% 10%,#8f6eff,transparent 32%),linear-gradient(155deg,#35264b,#11101c); }
+.panel-three .mini-hero strong { font-size: 15px; }
+.panel-caption { display: flex; align-items: center; gap: 8px; color: #9da5b9; font-size: 9px; margin-top: 9px; }
+.panel-caption i { display: block; width: 6px; height: 6px; background: var(--mint); border-radius: 50%; box-shadow: 0 0 8px rgba(147,232,204,.8); }
+.hero-stats { position: absolute; right: 3px; bottom: 44px; display: flex; flex-direction: column; gap: 7px; padding: 14px 16px; background: rgba(16,18,25,.7); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; backdrop-filter: blur(12px); }
+.hero-stats strong { font-size: 18px; letter-spacing: -.05em; }
+.hero-stats small { font-size: 8px; color: #9298a9; letter-spacing: .1em; text-transform: uppercase; }
+.trust-strip { border-top: 1px solid rgba(255,255,255,.075); border-bottom: 1px solid rgba(255,255,255,.075); background: #0b0c10; }
+.trust-inner { min-height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.trust-label { color: #666c7a; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+.trust-wordmarks { display: flex; align-items: center; justify-content: flex-end; gap: clamp(18px,4.2vw,58px); color: #777d8c; }
+.trust-wordmarks span { font-size: 15px; font-weight: 750; letter-spacing: -.05em; white-space: nowrap; }
+.trust-wordmarks span:nth-child(2) { font-size: 12px; letter-spacing: .16em; }
+.trust-wordmarks span:nth-child(3) { font-size: 16px; font-weight: 500; letter-spacing: -.04em; }
+.trust-wordmarks span:nth-child(4) { font-size: 11px; letter-spacing: .19em; }
+.market-section { background: #0a0b0f; }
+.market-toolbar { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin: 28px 0 24px; }
+.searchbox { flex: 1; max-width: 345px; min-width: 215px; position: relative; }
+.searchbox .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #777e8e; font-size: 17px; pointer-events: none; }
+.searchbox input { width: 100%; height: 43px; padding: 0 14px 0 42px; border-radius: 99px; border: 1px solid var(--line); background: #111319; color: #f2f4ff; outline: none; font-size: 12px; }
+.searchbox input:focus { border-color: rgba(166,185,255,.55); box-shadow: 0 0 0 3px rgba(151,170,255,.08); }
+.sort-select { height: 43px; border-radius: 99px; background: #111319; border: 1px solid var(--line); color: #b6bbca; font-size: 11px; padding: 0 14px; }
+.filters { display: flex; gap: 7px; flex-wrap: wrap; }
+.filter-chip { border: 1px solid var(--line); background: transparent; color: #9298a7; border-radius: 99px; min-height: 35px; padding: 8px 13px; font-size: 11px; cursor: pointer; transition: all .2s; }
+.filter-chip:hover { border-color: rgba(164,182,255,.38); color: #e4e8ff; }
+.filter-chip.active { color: #11131a; background: #e4e9ff; border-color: #e4e9ff; font-weight: 750; }
+.market-meta { display: flex; justify-content: space-between; color: #777d8a; font-size: 10px; margin-bottom: 16px; }
+.template-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
+.template-card { min-width: 0; border: 1px solid rgba(255,255,255,.09); border-radius: 18px; background: linear-gradient(150deg,#14161d,#101116); overflow: hidden; transition: transform .25s,border-color .25s,box-shadow .25s; }
+.template-card:hover { transform: translateY(-5px); border-color: rgba(163,181,255,.33); box-shadow: 0 20px 52px rgba(0,0,0,.22); }
+.card-preview { height: 220px; padding: 11px; position: relative; overflow: hidden; cursor: pointer; background: #111827; }
+.preview-browser { width: 100%; height: 100%; background: var(--preview-bg,#111827); border-radius: 9px; overflow: hidden; position: relative; box-shadow: 0 7px 24px rgba(0,0,0,.18); color: var(--preview-ink,#f5f5f5); }
+.browser-bar { height: 22px; display: flex; align-items: center; gap: 4px; padding: 0 8px; background: rgba(0,0,0,.17); border-bottom: 1px solid rgba(255,255,255,.09); }
+.browser-bar i { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.45); }
+.browser-bar span { margin-left: auto; font-size: 5px; opacity: .55; letter-spacing: .12em; }
+.mock-content { position: relative; padding: 17px 17px 13px; height: calc(100% - 22px); overflow: hidden; }
+.mock-brand { font-size: 7px; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; display: flex; align-items: center; justify-content: space-between; }
+.mock-brand b { font-size: 6px; padding: 5px 8px; border-radius: 99px; background: var(--preview-accent,#d5e0ff); color: var(--preview-btn-ink,#111); }
+.mock-title { font-size: clamp(21px,2.6vw,31px); font-weight: 750; line-height: .91; letter-spacing: -.08em; max-width: 75%; margin-top: 24px; position: relative; z-index: 1; }
+.mock-title span { display: block; color: var(--preview-accent,#d5e0ff); }
+.mock-sub { font-size: 6px; opacity: .65; max-width: 56%; line-height: 1.5; margin-top: 9px; }
+.mock-action { display: inline-flex; margin-top: 13px; padding: 6px 9px; border-radius: 99px; color: var(--preview-btn-ink,#101010); background: var(--preview-accent,#d5e0ff); font-size: 6px; font-weight: 800; }
+.mock-art { position: absolute; width: 43%; height: 67%; right: 2%; bottom: 3%; border-radius: 47% 53% 39% 61% / 45% 39% 61% 55%; background: radial-gradient(circle at 30% 26%,rgba(255,255,255,.9),transparent 12%),radial-gradient(circle at 42% 35%,var(--preview-accent,#d5e0ff),transparent 28%),linear-gradient(140deg,var(--preview-art,#5267a4),#080b13); box-shadow: inset -10px -10px 24px rgba(0,0,0,.55),0 0 28px color-mix(in srgb,var(--preview-accent,#d5e0ff) 18%,transparent); transform: rotate(-13deg); }
+.mock-art:after { content: ""; position: absolute; inset: -15% -10%; border: 1px solid color-mix(in srgb,var(--preview-accent,#d5e0ff) 48%,transparent); border-radius: 50%; transform: rotate(35deg) scaleY(.65); }
+.template-card[data-style="saas"] .mock-art { width: 44%; height: 52%; border-radius: 10px; transform: rotate(7deg); background: linear-gradient(135deg,#95a9ff,#45448c 50%,#17162a); box-shadow: 0 0 22px rgba(145,160,255,.28); }
+.template-card[data-style="shop"] .mock-art { border-radius: 6px; width: 37%; height: 68%; transform: rotate(3deg); background: linear-gradient(135deg,#f6d7b4,#aa664f 48%,#4b2927); }
+.template-card[data-style="food"] .mock-art { width: 38%; height: 63%; border-radius: 50%; transform: rotate(-8deg); background: radial-gradient(circle at 35% 30%,#ffdf93,#b95825 35%,#41251a 72%); }
+.template-card[data-style="portfolio"] .mock-art { width: 36%; height: 73%; border-radius: 4px; transform: rotate(5deg); background: linear-gradient(165deg,#d7d9d2,#53665e 52%,#1a2927); }
+.template-card[data-style="agency"] .mock-art { width: 42%; height: 72%; border-radius: 25% 75% 40% 60%; transform: rotate(35deg); background: linear-gradient(135deg,#ffb78a,#a468d0 45%,#29234b); }
+.template-card[data-style="game"] .mock-art { width: 42%; height: 67%; border-radius: 23% 60% 16% 65%; transform: rotate(-20deg); background: linear-gradient(135deg,#ff5e9d,#773cff 55%,#1d163f); }
+.template-card[data-style="aero"] .mock-art { width: 46%; height: 57%; border-radius: 50%; transform: rotate(-12deg); background: radial-gradient(circle at 30% 25%,#f6ffff,#88c8de 13%,#27506f 35%,#11182c 70%); }
+.template-card[data-style="creator"] .mock-art { width: 40%; height: 72%; border-radius: 50% 50% 4px 4px; transform: rotate(8deg); background: linear-gradient(135deg,#d6a8ff,#f0ca87 48%,#5e467f); }
+.template-card[data-style="saas"] .preview-browser { --preview-bg:#101426; --preview-ink:#f4f5ff; --preview-accent:#9ba9ff; --preview-btn-ink:#15162b; --preview-art:#313a8c; }
+.template-card[data-style="shop"] .preview-browser { --preview-bg:#f1e6d7; --preview-ink:#2a2824; --preview-accent:#bd7357; --preview-btn-ink:#fff9f1; --preview-art:#9c5846; }
+.template-card[data-style="food"] .preview-browser { --preview-bg:#1b221c; --preview-ink:#f4f0e3; --preview-accent:#efbf7c; --preview-btn-ink:#212016; --preview-art:#774225; }
+.template-card[data-style="portfolio"] .preview-browser { --preview-bg:#e5e6dc; --preview-ink:#1f2a24; --preview-accent:#546d5d; --preview-btn-ink:#fff; --preview-art:#82958b; }
+.template-card[data-style="agency"] .preview-browser { --preview-bg:#171320; --preview-ink:#f5eeff; --preview-accent:#d4a4ff; --preview-btn-ink:#21152c; --preview-art:#7850a4; }
+.template-card[data-style="game"] .preview-browser { --preview-bg:#120d22; --preview-ink:#fff4ff; --preview-accent:#ff77bf; --preview-btn-ink:#211027; --preview-art:#8739df; }
+.template-card[data-style="aero"] .preview-browser { --preview-bg:#0e1c2b; --preview-ink:#edf7ff; --preview-accent:#a3e8f6; --preview-btn-ink:#101d28; --preview-art:#286c93; }
+.template-card[data-style="creator"] .preview-browser { --preview-bg:#f4e9dc; --preview-ink:#29221e; --preview-accent:#a981c7; --preview-btn-ink:#fff; --preview-art:#ad8b95; }
+.card-preview-shade { position: absolute; inset: auto 11px 11px; padding: 36px 12px 12px; display: flex; justify-content: space-between; align-items: end; pointer-events: none; opacity: 0; background: linear-gradient(transparent,rgba(0,0,0,.72)); transition: opacity .2s; }
+.template-card:hover .card-preview-shade { opacity: 1; }
+.preview-pill { font-size: 9px; color: white; border: 1px solid rgba(255,255,255,.3); border-radius: 99px; padding: 6px 9px; background: rgba(0,0,0,.23); }
+.favorite { position: absolute; top: 20px; right: 20px; z-index: 3; width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255,255,255,.19); background: rgba(9,10,15,.65); color: white; cursor: pointer; font-size: 17px; backdrop-filter: blur(8px); transition: all .2s; }
+.favorite:hover, .favorite.active { background: rgba(145,162,255,.2); border-color: #aab8ff; color: #d1dbff; }
+.card-body { padding: 16px 17px 17px; }
+.card-meta { display: flex; gap: 7px; align-items: center; margin-bottom: 10px; color: #8d93a3; font-size: 9px; }
+.card-meta .category { color: #bbc4ff; }
+.card-meta .separator { opacity: .45; }
+.card-title-row { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+.card-title { font-size: 18px; letter-spacing: -.05em; font-weight: 650; margin: 0; }
+.card-price { font-size: 15px; font-weight: 750; white-space: nowrap; }
+.card-desc { color: #858b9a; font-size: 11px; line-height: 1.65; margin: 8px 0 14px; min-height: 35px; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px; }
+.card-tags span { padding: 5px 7px; border: 1px solid rgba(255,255,255,.08); border-radius: 5px; color: #8c92a2; font-size: 9px; }
+.card-actions { display: flex; gap: 7px; }
+.card-actions .button { flex: 1; }
+.compare-checkbox { display: flex; align-items: center; gap: 6px; color: #828897; font-size: 10px; cursor: pointer; margin-left: auto; white-space: nowrap; }
+.compare-checkbox input { accent-color: #b2c0ff; }
+.empty-state { padding: 58px 20px; text-align: center; color: #949aaa; border: 1px dashed var(--line-strong); border-radius: 18px; }
+.compare-tray { position: fixed; z-index: 120; bottom: 18px; left: 50%; transform: translateX(-50%); width: min(700px,calc(100% - 28px)); display: none; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px 12px 18px; border: 1px solid rgba(190,202,255,.24); background: rgba(18,20,29,.94); backdrop-filter: blur(20px); border-radius: 16px; box-shadow: 0 15px 60px rgba(0,0,0,.45); }
+.compare-tray.show { display: flex; }
+.compare-tray p { font-size: 12px; color: #c6cbda; margin: 0; }
+.compare-tray small { color: #888fa0; display: block; margin-top: 3px; font-size: 10px; }
+.playground { background: radial-gradient(ellipse at 75% 10%,rgba(79,85,154,.14),transparent 34%),#0d0e13; }
+.playground-layout { display: grid; grid-template-columns: 290px minmax(0,1fr); gap: 18px; align-items: stretch; }
+.control-panel { padding: 23px; background: #13151c; border: 1px solid rgba(255,255,255,.09); border-radius: 18px; }
+.control-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 17px; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
+.control-header h3 { font-size: 14px; margin: 0; letter-spacing: -.03em; }
+.control-header small { color: #838998; font-size: 9px; letter-spacing: .13em; text-transform: uppercase; }
+.field { display: block; margin-bottom: 18px; }
+.field-label { display: flex; justify-content: space-between; align-items: center; color: #c0c5d2; font-size: 11px; margin-bottom: 8px; }
+.field-label small { color: #757c8c; font-size: 9px; }
+.field input[type="text"], .field select, .field textarea { width: 100%; background: #0d0f15; color: #edf0ff; border: 1px solid rgba(255,255,255,.12); border-radius: 9px; padding: 11px 12px; font-size: 11px; resize: vertical; }
+.field select { cursor: pointer; }
+.swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+.swatch { display: block; width: 27px; height: 27px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; outline: 1px solid rgba(255,255,255,.12); outline-offset: 1px; transition: transform .2s,outline-color .2s; }
+.swatch:hover { transform: scale(1.09); }
+.swatch.active { outline: 2px solid #f0f2ff; outline-offset: 3px; }
+.segmented { display: flex; gap: 4px; background: #0b0d12; border: 1px solid rgba(255,255,255,.08); padding: 4px; border-radius: 10px; }
+.segmented button { border: 0; border-radius: 7px; flex: 1; padding: 8px 4px; font-size: 9px; background: transparent; color: #838999; cursor: pointer; }
+.segmented button.active { background: #282d3b; color: #eff1ff; }
+.control-divider { border: 0; border-top: 1px solid var(--line); margin: 20px 0; }
+.preview-stage { border: 1px solid rgba(255,255,255,.1); border-radius: 18px; background: #151720; padding: 19px; min-width: 0; display: flex; flex-direction: column; }
+.stage-top { display: flex; gap: 15px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.stage-dots { display: flex; gap: 5px; }
+.stage-dots i { width: 7px; height: 7px; border-radius: 50%; background: #565d6c; }
+.stage-url { background: #0d0f14; border: 1px solid rgba(255,255,255,.07); border-radius: 6px; padding: 7px 11px; font-size: 9px; color: #7e8595; flex: 1; max-width: 310px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.device-switch { display: flex; gap: 4px; }
+.device-switch button { border: 1px solid transparent; color: #858c9b; background: transparent; border-radius: 7px; padding: 6px 8px; cursor: pointer; font-size: 12px; }
+.device-switch button.active { background: #272b36; border-color: rgba(255,255,255,.07); color: #e9ecff; }
+.preview-canvas-wrap { min-height: 486px; flex: 1; display: flex; align-items: stretch; justify-content: center; overflow: hidden; padding: 1px; }
+.play-preview { width: 100%; max-width: 100%; min-height: 470px; background: var(--pp-bg,#101426); color: var(--pp-ink,#f5f5ff); border-radius: 10px; overflow: hidden; transition: width .3s; position: relative; }
+.play-preview[data-layout="editorial"] .pp-hero { grid-template-columns: 1.2fr .8fr; }
+.play-preview[data-layout="centered"] .pp-hero { grid-template-columns: 1fr; text-align: center; }
+.play-preview[data-layout="centered"] .pp-title, .play-preview[data-layout="centered"] .pp-sub { margin-left: auto; margin-right: auto; }
+.play-preview[data-layout="centered"] .pp-art { width: 150px; height: 150px; margin: 30px auto 0; }
+.pp-nav { height: 47px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 23px; border-bottom: 1px solid color-mix(in srgb,var(--pp-ink) 11%,transparent); font-size: 9px; }
+.pp-brand { font-weight: 850; letter-spacing: -.04em; }
+.pp-nav-links { display: flex; gap: 15px; font-size: 7px; opacity: .65; }
+.pp-nav-cta { padding: 7px 11px; background: var(--pp-accent,#9ba9ff); color: var(--pp-btn-ink,#111); border-radius: var(--pp-radius,99px); font-weight: 800; font-size: 7px; white-space: nowrap; }
+.pp-hero { display: grid; grid-template-columns: 1fr .86fr; gap: 16px; align-items: center; padding: 49px 8% 43px; min-height: 330px; }
+.pp-kicker { color: var(--pp-accent,#9ba9ff); font-size: 7px; letter-spacing: .15em; text-transform: uppercase; font-weight: 800; }
+.pp-title { margin: 14px 0 12px; max-width: 450px; font-size: clamp(31px,4.4vw,54px); line-height: .92; letter-spacing: -.075em; font-weight: 750; }
+.pp-sub { color: color-mix(in srgb,var(--pp-ink) 68%,transparent); font-size: 10px; line-height: 1.7; max-width: 360px; }
+.pp-main-cta { display: inline-flex; align-items: center; gap: 7px; margin-top: 20px; border: 0; background: var(--pp-accent,#9ba9ff); color: var(--pp-btn-ink,#111); padding: 11px 15px; border-radius: var(--pp-radius,99px); font-size: 9px; font-weight: 850; cursor: pointer; }
+.pp-art { width: 100%; aspect-ratio: 1/.92; max-height: 245px; border-radius: 47% 53% 42% 58% / 46% 37% 63% 54%; position: relative; background: radial-gradient(circle at 31% 25%,rgba(255,255,255,.9),transparent 10%),radial-gradient(circle at 38% 34%,var(--pp-accent,#9ba9ff),transparent 25%),linear-gradient(140deg,var(--pp-art,#45448c),var(--pp-bg,#101426) 80%); box-shadow: inset -15px -15px 35px rgba(0,0,0,.52),0 0 40px color-mix(in srgb,var(--pp-accent,#9ba9ff) 20%,transparent); transform: rotate(-8deg); }
+.pp-art:before { content: ""; position: absolute; inset: -9%; border: 1px solid color-mix(in srgb,var(--pp-accent,#9ba9ff) 52%,transparent); border-radius: 50%; transform: rotate(28deg) scaleY(.65); }
+.pp-art:after { content: ""; position: absolute; width: 21%; height: 21%; right: 5%; bottom: 14%; border-radius: 50%; background: color-mix(in srgb,var(--pp-accent,#9ba9ff) 70%,white); box-shadow: 0 0 30px var(--pp-accent,#9ba9ff); }
+.pp-below { padding: 0 8% 28px; }
+.pp-below-label { text-align: center; text-transform: uppercase; letter-spacing: .14em; color: color-mix(in srgb,var(--pp-ink) 45%,transparent); font-size: 7px; }
+.pp-feature-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; margin-top: 15px; }
+.pp-feature { border: 1px solid color-mix(in srgb,var(--pp-ink) 12%,transparent); background: color-mix(in srgb,var(--pp-ink) 4%,transparent); border-radius: 8px; padding: 13px; min-height: 66px; }
+.pp-feature i { display: block; width: 18px; height: 18px; border-radius: 6px; background: var(--pp-accent,#9ba9ff); margin-bottom: 9px; opacity: .9; }
+.pp-feature strong { display: block; font-size: 8px; }
+.pp-feature small { display: block; color: color-mix(in srgb,var(--pp-ink) 55%,transparent); font-size: 6px; margin-top: 4px; }
+.play-preview[data-device="tablet"] { width: 78%; border: 7px solid #07080b; border-radius: 18px; }
+.play-preview[data-device="tablet"] .pp-nav { padding: 0 15px; }
+.play-preview[data-device="tablet"] .pp-nav-links { display: none; }
+.play-preview[data-device="tablet"] .pp-hero { padding: 37px 7% 32px; grid-template-columns: 1fr .8fr; }
+.play-preview[data-device="mobile"] { width: 375px; max-width: 100%; border: 7px solid #07080b; border-radius: 23px; min-height: 520px; }
+.play-preview[data-device="mobile"] .pp-nav { height: 43px; padding: 0 13px; }
+.play-preview[data-device="mobile"] .pp-nav-links { display: none; }
+.play-preview[data-device="mobile"] .pp-hero { grid-template-columns: 1fr; padding: 29px 20px 24px; text-align: center; gap: 0; }
+.play-preview[data-device="mobile"] .pp-title { font-size: 33px; margin-inline: auto; }
+.play-preview[data-device="mobile"] .pp-sub { margin-inline: auto; }
+.play-preview[data-device="mobile"] .pp-art { width: 130px; margin: 27px auto 0; }
+.play-preview[data-device="mobile"] .pp-feature-row { gap: 5px; }
+.play-preview[data-device="mobile"] .pp-feature { padding: 8px; }
+.play-preview[data-device="mobile"] .pp-feature strong { font-size: 7px; }
+.play-preview[data-device="mobile"] .pp-below { padding: 0 13px 20px; }
+.playground-foot { color: #777f90; font-size: 10px; display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-top: 15px; }
+.pricing { background: #090a0e; }
+.pricing-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin-top: 35px; }
+.price-card { border: 1px solid rgba(255,255,255,.1); border-radius: 18px; background: #111319; padding: 26px; min-height: 372px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.price-card.featured { border-color: rgba(169,185,255,.43); background: radial-gradient(ellipse at 95% 0%,rgba(119,130,215,.19),transparent 43%),#141621; box-shadow: 0 15px 65px rgba(65,70,129,.08); }
+.price-card.featured:before { content: ""; position: absolute; top: 0; left: 18px; right: 18px; height: 1px; background: linear-gradient(90deg,transparent,#b8c4ff,transparent); }
+.price-tag { color: #bbc4ff; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; font-weight: 800; }
+.price-card h3 { font-size: 22px; letter-spacing: -.05em; margin: 14px 0 8px; }
+.price-card .price-desc { min-height: 40px; color: #8c92a2; font-size: 11px; line-height: 1.65; margin: 0; }
+.price { font-size: 39px; letter-spacing: -.07em; font-weight: 700; margin: 22px 0 4px; }
+.price span { font-size: 11px; font-weight: 500; letter-spacing: 0; color: #8b91a0; }
+.price-note { color: #777e8d; font-size: 9px; margin-bottom: 20px; }
+.price-divider { border: 0; border-top: 1px solid var(--line); width: 100%; margin: 0 0 17px; }
+.feature-list { display: grid; gap: 12px; padding: 0; margin: 0 0 24px; list-style: none; color: #b5bbc9; font-size: 11px; }
+.feature-list li { display: flex; align-items: start; gap: 9px; }
+.feature-list li:before { content: "✓"; color: #9fbdff; font-size: 12px; }
+.price-card .button { margin-top: auto; }
+.license-note { color: #747b89; font-size: 10px; line-height: 1.7; margin-top: 20px; }
+.community { background: #0d0e13; }
+.community-grid { display: grid; grid-template-columns: 1.12fr .88fr; gap: 18px; }
+.featured-design { border: 1px solid var(--line); border-radius: 20px; overflow: hidden; background: #14151d; }
+.featured-art { position: relative; min-height: 310px; background: radial-gradient(circle at 70% 45%,rgba(166,190,255,.32),transparent 30%),radial-gradient(circle at 25% 85%,rgba(139,113,255,.19),transparent 32%),#0d1020; display: grid; place-items: center; overflow: hidden; }
+.featured-art:before, .featured-art:after { content: ""; position: absolute; width: 410px; height: 150px; border: 1px solid rgba(178,195,255,.35); border-radius: 50%; transform: rotate(-20deg); }
+.featured-art:after { width: 300px; height: 290px; transform: rotate(53deg); border-color: rgba(171,140,255,.28); }
+.featured-globe { width: 168px; height: 168px; z-index: 1; border-radius: 50%; background: radial-gradient(circle at 30% 25%,#f1f4ff,#9aaaff 10%,#4e5d9f 29%,#10172e 60%,#04050a 78%); box-shadow: inset -20px -20px 30px #05060b,0 0 65px rgba(128,154,255,.26); }
+.featured-label { position: absolute; top: 22px; left: 22px; padding: 7px 10px; border: 1px solid rgba(255,255,255,.18); background: rgba(9,10,15,.47); border-radius: 99px; color: #dbe2ff; font-size: 9px; z-index: 2; }
+.featured-copy { padding: 22px 24px 24px; }
+.featured-copy h3 { font-size: 22px; letter-spacing: -.05em; margin: 8px 0; }
+.featured-copy p { color: #8d94a5; font-size: 11px; line-height: 1.7; max-width: 560px; margin: 0 0 18px; }
+.community-side { display: flex; flex-direction: column; gap: 12px; }
+.share-card { border: 1px solid var(--line); background: #13151c; border-radius: 16px; padding: 20px; flex: 1; }
+.share-card .share-icon { width: 37px; height: 37px; display: grid; place-items: center; border: 1px solid rgba(174,188,255,.25); background: rgba(150,165,255,.08); border-radius: 11px; color: #bac6ff; font-size: 17px; }
+.share-card h3 { font-size: 17px; letter-spacing: -.04em; margin: 16px 0 7px; }
+.share-card p { font-size: 11px; line-height: 1.7; color: #8d93a2; margin: 0 0 16px; max-width: 380px; }
+.share-card .button { width: 100%; }
+.badge-demo { display: inline-flex; gap: 5px; align-items: center; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.045); border-radius: 5px; padding: 5px 7px; color: #a9b1c3; font-size: 8px; }
+.badge-demo b { color: #ced6ff; font-weight: 800; }
+.inquiry { background: radial-gradient(ellipse at 15% 55%,rgba(84,79,151,.13),transparent 34%),#090a0e; }
+.inquiry-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 70px; align-items: start; }
+.inquiry-copy h2 { font-size: clamp(38px,5vw,61px); line-height: .98; letter-spacing: -.07em; margin: 15px 0 20px; }
+.inquiry-copy p { max-width: 420px; font-size: 13px; line-height: 1.8; color: #9298a7; }
+.inquiry-details { display: grid; gap: 11px; margin-top: 27px; }
+.inquiry-detail { display: flex; gap: 11px; align-items: center; color: #bdc2cf; font-size: 11px; }
+.inquiry-detail i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #171a25; border: 1px solid var(--line); font-style: normal; color: #b9c4ff; }
+.inquiry-form { border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 27px; background: rgba(18,20,27,.84); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.inquiry-form label { display: block; color: #b7bdcc; font-size: 10px; margin-bottom: 15px; }
+.inquiry-form input, .inquiry-form select, .inquiry-form textarea { display: block; width: 100%; margin-top: 7px; border: 1px solid rgba(255,255,255,.12); background: #0b0d12; border-radius: 9px; padding: 12px; color: #eff1ff; font-size: 11px; }
+.inquiry-form textarea { min-height: 96px; resize: vertical; }
+.form-footnote { color: #747b89; font-size: 9px; line-height: 1.6; margin: 12px 0 0; }
+.form-status { display: none; padding: 11px 13px; margin-top: 13px; background: rgba(147,232,204,.06); border: 1px solid rgba(147,232,204,.2); border-radius: 8px; color: #b5f0da; font-size: 10px; line-height: 1.6; }
+.form-status.show { display: block; }
+.footer { border-top: 1px solid rgba(255,255,255,.08); background: #08090c; padding: 35px 0 27px; }
+.footer-main { display: flex; align-items: start; justify-content: space-between; gap: 25px; }
+.footer-brand p { font-size: 10px; line-height: 1.7; color: #787f8e; max-width: 255px; margin: 12px 0 0; }
+.footer-links { display: flex; gap: 55px; }
+.footer-col { display: grid; gap: 11px; }
+.footer-col strong { font-size: 10px; color: #ced2dd; margin-bottom: 3px; }
+.footer-col a { font-size: 10px; color: #7e8594; }
+.footer-col a:hover { color: #e1e5ff; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.07); padding-top: 17px; margin-top: 30px; display: flex; justify-content: space-between; gap: 18px; color: #626977; font-size: 9px; }
+.footer-bottom span:last-child { text-align: right; }
+.modal-backdrop { position: fixed; inset: 0; z-index: 500; background: rgba(4,5,8,.76); backdrop-filter: blur(13px); display: none; align-items: center; justify-content: center; padding: 20px; }
+.modal-backdrop.show { display: flex; }
+.modal { width: min(850px,100%); max-height: min(88vh,900px); overflow: auto; border: 1px solid rgba(255,255,255,.15); border-radius: 21px; background: #12141b; box-shadow: 0 25px 100px rgba(0,0,0,.6); }
+.modal-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 21px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(18,20,27,.95); backdrop-filter: blur(12px); z-index: 2; }
+.modal-head strong { font-size: 12px; letter-spacing: .02em; }
+.modal-close { width: 31px; height: 31px; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: #b9bfce; font-size: 17px; cursor: pointer; }
+.modal-content { padding: 23px; }
+.detail-grid { display: grid; grid-template-columns: 1fr .83fr; gap: 23px; }
+.detail-preview { border: 1px solid var(--line); border-radius: 13px; overflow: hidden; }
+.detail-preview .card-preview { height: 270px; padding: 12px; }
+.detail-copy h2 { font-size: 28px; line-height: 1; letter-spacing: -.06em; margin: 8px 0 12px; }
+.detail-copy p { color: #9299a9; font-size: 12px; line-height: 1.75; }
+.detail-price { font-size: 24px; font-weight: 750; margin: 17px 0; }
+.detail-bullets { display: grid; gap: 9px; color: #b7becc; font-size: 11px; margin: 17px 0 22px; }
+.detail-bullets span:before { content: "✓"; color: #9db5ff; margin-right: 8px; }
+.detail-licence { border-top: 1px solid var(--line); padding-top: 13px; color: #7f8796; font-size: 9px; line-height: 1.7; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.compare-table th, .compare-table td { border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; padding: 14px 11px; }
+.compare-table th { color: #bec7ff; font-weight: 750; }
+.compare-table td { color: #a2a9b8; }
+.compare-table tr td:first-child { color: #e2e5ee; font-weight: 650; }
+.toast { position: fixed; z-index: 700; left: 50%; bottom: 22px; transform: translate(-50%,20px); opacity: 0; pointer-events: none; border: 1px solid rgba(187,201,255,.2); background: rgba(21,23,32,.96); backdrop-filter: blur(12px); box-shadow: 0 12px 42px rgba(0,0,0,.35); color: #e7eaff; padding: 12px 17px; border-radius: 999px; font-size: 11px; transition: all .25s; white-space: nowrap; max-width: calc(100% - 24px); overflow: hidden; text-overflow: ellipsis; }
+.toast.show { opacity: 1; transform: translate(-50%,0); }
+.integration-banner { display: flex; align-items: start; gap: 10px; border: 1px solid rgba(189,201,255,.14); background: rgba(147,163,255,.05); border-radius: 11px; padding: 12px 14px; color: #a4adbf; font-size: 10px; line-height: 1.65; margin-top: 16px; }
+.integration-banner b { color: #d5dcff; }
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } .reveal { opacity: 1; transform: none; } }
+@media (max-width: 1000px) {
+  .nav-links { gap: 17px; }
+  .hero { padding-top: 57px; min-height: auto; }
+  .hero-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+  .hero h1 { font-size: clamp(51px,7vw,73px); }
+  .hero-visual { transform: scale(.91); transform-origin: center right; margin-left: -35px; margin-right: -20px; }
+  .template-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .playground-layout { grid-template-columns: 258px minmax(0,1fr); }
+  .inquiry-grid { gap: 35px; }
+}
+@media (max-width: 760px) {
+  .wrap { width: min(100% - 32px,var(--max)); }
+  .nav { height: 64px; }
+  .nav-links { display: none; position: absolute; top: 63px; left: 0; right: 0; padding: 20px 24px 23px; flex-direction: column; align-items: stretch; gap: 0; background: rgba(10,11,15,.98); border-bottom: 1px solid var(--line); }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .nav-actions .button { display: none; }
+  .menu-toggle { display: block; }
+  .hero { padding: 47px 0 44px; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-copy { padding: 5px 0 0; }
+  .hero h1 { font-size: clamp(56px,13vw,79px); }
+  .hero-copy > p { font-size: 13px; max-width: 420px; }
+  .hero-visual { height: 390px; width: 100%; transform: scale(.81); transform-origin: top center; margin: -6px 0 -52px; }
+  .panel-one { left: 0; top: 45px; }
+  .panel-two { right: -5px; top: 180px; }
+  .panel-three { bottom: -5px; left: 8%; }
+  .core-orb { left: 29%; top: 95px; }
+  .hero-stats { right: -4px; bottom: 12px; }
+  .trust-inner { padding: 18px 0; flex-direction: column; align-items: start; }
+  .trust-wordmarks { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 14px 20px; }
+  .trust-wordmarks span { font-size: 12px !important; }
+  .section { padding: 75px 0; }
+  .section-head { display: block; margin-bottom: 26px; }
+  .section-head p { margin-top: 15px; }
+  .market-toolbar { align-items: stretch; }
+  .searchbox { max-width: none; width: 100%; flex-basis: 100%; }
+  .sort-select { max-width: 100%; }
+  .template-grid { gap: 12px; }
+  .card-preview { height: 176px; padding: 7px; }
+  .card-preview-shade { inset: auto 7px 7px; }
+  .mock-content { padding: 12px; }
+  .mock-title { font-size: 22px; margin-top: 17px; }
+  .card-body { padding: 13px; }
+  .card-title { font-size: 15px; }
+  .card-price { font-size: 13px; }
+  .card-desc { font-size: 10px; min-height: 49px; }
+  .card-tags span { font-size: 8px; }
+  .card-actions { flex-direction: column; }
+  .card-actions .button { width: 100%; }
+  .compare-checkbox { margin: 4px 0 0; }
+  .favorite { top: 13px; right: 13px; }
+  .playground-layout { grid-template-columns: 1fr; }
+  .control-panel { padding: 18px; }
+  .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 13px; }
+  .control-grid .wide { grid-column: 1/-1; }
+  .preview-stage { padding: 10px; }
+  .stage-top { gap: 7px; flex-wrap: wrap; }
+  .stage-url { order: 3; flex-basis: 100%; max-width: none; }
+  .preview-canvas-wrap { min-height: 430px; }
+  .play-preview { min-height: 420px; }
+  .play-preview .pp-hero { padding: 34px 6% 28px; }
+  .play-preview .pp-title { font-size: clamp(28px,5.5vw,44px); }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .price-card { min-height: auto; }
+  .price-card .price-desc { min-height: 0; }
+  .community-grid { grid-template-columns: 1fr; }
+  .featured-art { min-height: 260px; }
+  .community-side { display: grid; grid-template-columns: 1fr 1fr; }
+  .share-card { padding: 16px; }
+  .inquiry-grid { grid-template-columns: 1fr; gap: 24px; }
+  .inquiry-form { padding: 20px; }
+  .footer-main { flex-direction: column; }
+  .footer-links { gap: 32px; flex-wrap: wrap; }
+  .footer-bottom { flex-direction: column; }
+  .footer-bottom span:last-child { text-align: left; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .detail-preview .card-preview { height: 230px; }
+  .modal-content { padding: 16px; }
+}
+@media (max-width: 440px) {
+  .hero-actions .button { flex: 1; min-width: 145px; }
+  .hero-visual { transform: scale(.68); margin: -28px 0 -98px; width: 125%; margin-left: -12.5%; }
+  .template-grid { grid-template-columns: 1fr; }
+  .card-preview { height: 215px; padding: 10px; }
+  .mock-content { padding: 17px; }
+  .mock-title { font-size: 30px; margin-top: 22px; }
+  .card-desc { min-height: 0; }
+  .card-actions { flex-direction: row; }
+  .compare-checkbox { margin-left: auto; }
+  .control-grid { grid-template-columns: 1fr; }
+  .control-grid .wide { grid-column: auto; }
+  .community-side { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .play-preview[data-device="mobile"] { width: 320px; }
+  .compare-tray { align-items: stretch; }
+  .compare-tray .button { padding-inline: 10px; }
+}
+
+    .play-preview[data-surface="midnight"]{--pp-bg:#091a30!important;--pp-art:#1761a4!important}
+    .play-preview[data-surface="warm"]{--pp-bg:#24201f!important;--pp-art:#775e50!important}
+    .play-preview[data-surface="light"]{--pp-bg:#e9edf5!important;--pp-ink:#171b28!important;--pp-art:#b8c5e8!important}
+    .play-preview[data-width="compact"] .pp-copy{max-width:230px}.play-preview[data-width="wide"] .pp-copy{max-width:410px}
+  </style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#home" aria-label="Nexora Studio home"><span class="brand-mark" aria-hidden="true"></span><span>NEXORA <em>STUDIO</em></span></a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#marketplace">Explore templates</a>
+        <a href="#playground">Playground</a>
+        <a href="#inquiry">Work with us</a>
+        <a href="#community">Community</a>
+      </nav>
+      <div class="nav-actions"><a class="button secondary small" href="#playground">Open studio <span class="arrow">↗</span></a><button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button></div>
+    </div>
+  </header>
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="hero-badge"><span class="spark">✳</span> THE NEXT ERA OF WEB DESIGN <span style="opacity:.45">/ 01</span></div>
+          <h1>Your next website <span class="gradient-text">starts here.</span></h1>
+          <p>Original, beautifully engineered website concepts. Make them yours in seconds, then take your idea from a spark to a live experience.</p>
+          <div class="hero-actions"><a class="button primary" href="#marketplace">Explore templates <span class="arrow">↗</span></a><a class="button secondary" href="#playground">Launch playground <span>▷</span></a><a class="button quiet" href="#inquiry">Build my website</a></div>
+          <div class="hero-proof"><div class="proof-icons" aria-hidden="true"><i></i><i></i><i></i></div><span>Original concepts. Your vision. No template lock-in.</span></div>
+        </div>
+        <div class="hero-visual" aria-label="Abstract animated digital design environment">
+          <div class="orbit one"></div><div class="orbit two"></div><div class="orbit three"></div><div class="core-orb"></div>
+          <div class="float-panel panel-one"><div class="panel-top"><span>01 / NEXORA ORBIT</span><span class="panel-lights"><b></b><b></b><b></b></span></div><div class="mini-window"><div class="mini-hero"><small>YOUR NEXT CHAPTER</small><strong>Build beyond<br>the expected.</strong><i class="mini-cta"></i></div></div><div class="panel-caption"><i></i> Live preview environment</div></div>
+          <div class="float-panel panel-two"><div class="panel-top"><span>02 / VERDANT</span><span>↗</span></div><div class="mini-window"><div class="mini-hero"><small>GROW DIFFERENT</small><strong>Less noise.<br>More nature.</strong><i class="mini-cta"></i></div></div><div class="panel-caption"><i></i> Responsive by design</div></div>
+          <div class="float-panel panel-three"><div class="panel-top"><span>03 / NEBULA PLAY</span><span>●</span></div><div class="mini-window"><div class="mini-hero"><small>ENTER THE UNKNOWN</small><strong>Make your<br>own universe.</strong><i class="mini-cta"></i></div></div><div class="panel-caption"><i></i> Remixable design system</div></div>
+          <div class="hero-stats"><strong>01 — ∞</strong><small>Ideas to build</small></div>
+        </div>
+      </div>
+    </section>
+    <section class="trust-strip" aria-label="Design principles"><div class="wrap trust-inner"><span class="trust-label">Built for what’s next</span><div class="trust-wordmarks"><span>SAAS / AI</span><span>CREATORS</span><span>Commerce.</span><span>DIGITAL LABS</span><span>+ YOUR IDEA</span></div></div></section>
+
+    <section class="section market-section" id="marketplace">
+      <div class="wrap">
+        <div class="section-head reveal"><div><div class="eyebrow"><span class="dot"></span> THE TEMPLATE UNIVERSE</div><h2>Start with a great idea.<br><span class="gradient-text">Leave with a great site.</span></h2></div><p>Distinct, original concepts for ambitious projects. Find your direction, inspect the details, then remix it in the studio.</p></div>
+        <div class="market-toolbar">
+          <div class="searchbox"><span class="search-icon">⌕</span><input id="searchInput" type="search" placeholder="Search templates, styles, industries…" aria-label="Search templates"></div>
+          <div class="filters" id="filters" aria-label="Template categories"></div>
+          <select class="sort-select" id="sortSelect" aria-label="Sort templates"><option value="featured">Featured first</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="name">Name: A–Z</option></select>
+        </div>
+        <div class="market-meta"><span id="resultsCount">8 original concepts</span><span>Original design concepts</span></div>
+        <div class="template-grid" id="templateGrid"></div>
+        <div class="empty-state" id="emptyState" hidden>No templates match that search yet. Try another term or clear your filters.</div>
+        <div class="integration-banner"><span>✦</span><span><b>Original concept demos.</b> Each listing is a unique visual direction designed for this marketplace preview. Downloadable production files and real checkout are not connected in this demo; purchases can be enabled with a payment and file-delivery integration.</span></div>
+      </div>
+    </section>
+
+    <section class="section playground" id="playground">
+      <div class="wrap">
+        <div class="section-head reveal"><div><div class="eyebrow"><span class="dot"></span> THE NEXORA PLAYGROUND</div><h2>Make it yours.<br><span class="gradient-text">See it instantly.</span></h2></div><p>Change the direction, the palette, the words and the shape. Your preview reacts as you design—no complicated tools required.</p></div>
+        <div class="playground-layout">
+          <aside class="control-panel">
+            <div class="control-header"><h3>Design controls</h3><small>Live editor · v1.0</small></div>
+            <div class="control-grid">
+              <label class="field wide"><span class="field-label">Starting point <small>Choose a concept</small></span><select id="playTemplate"></select></label>
+              <label class="field wide"><span class="field-label">Hero headline</span><input type="text" id="heroText" maxlength="68" value="Build beyond the expected."></label>
+              <label class="field wide"><span class="field-label">Supporting message</span><textarea id="subText" rows="2" maxlength="150">A considered digital experience for people moving the world forward.</textarea></label>
+              <div class="field wide"><span class="field-label">Color direction</span><div class="swatches" id="swatches"></div></div>
+              <label class="field"><span class="field-label">Typography</span><select id="fontSelect"><option value="modern">Modern sans</option><option value="editorial">Editorial serif</option><option value="mono">Tech mono</option></select></label>
+              <label class="field"><span class="field-label">Button shape</span><select id="buttonShape"><option value="pill">Pill</option><option value="soft">Soft corners</option><option value="sharp">Architectural</option></select></label>
+              <div class="field wide"><span class="field-label">Composition</span><div class="segmented" id="layoutSwitch"><button type="button" data-layout="balanced" class="active">Balanced</button><button type="button" data-layout="editorial">Editorial</button><button type="button" data-layout="centered">Centered</button></div></div>
+            </div>
+            <hr class="control-divider">
+            <div class="control-grid">
+              <label class="field"><span class="field-label">Primary action</span><input id="buttonText" type="text" maxlength="26" value="Explore the future"></label>
+              <label class="field"><span class="field-label">Visual energy</span><select id="visualEnergy"><option value="calm">Calm</option><option value="balanced" selected>Balanced</option><option value="bold">Bold</option></select></label>
+              <label class="field wide"><span class="field-label">Eyebrow / overline</span><input id="kickerText" type="text" maxlength="36" value="DIGITAL, REIMAGINED"></label>
+              <label class="field"><span class="field-label">Navigation action</span><input id="navCtaText" type="text" maxlength="22" value="LET’S TALK ↗"></label>
+              <label class="field"><span class="field-label">Preview surface</span><select id="surfaceStyle"><option value="deep">Deep space</option><option value="midnight">Midnight blue</option><option value="warm">Warm graphite</option><option value="light">Light studio</option></select></label>
+              <label class="field"><span class="field-label">Content width</span><select id="contentWidth"><option value="compact">Compact</option><option value="standard" selected>Standard</option><option value="wide">Wide</option></select></label>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px"><button class="button secondary small" id="resetPlayground" type="button">↺ Reset</button><button class="button primary small" id="remixButton" type="button">Remix this design ↗</button></div>
+          </aside>
+          <div class="preview-stage">
+            <div class="stage-top"><div class="stage-dots" aria-hidden="true"><i></i><i></i><i></i></div><div class="stage-url" id="stageUrl">nexora.studio / preview / orbit</div><div class="device-switch" aria-label="Preview device"><button class="active" data-device="desktop" aria-label="Desktop preview" title="Desktop">▰</button><button data-device="tablet" aria-label="Tablet preview" title="Tablet">▤</button><button data-device="mobile" aria-label="Mobile preview" title="Mobile">▯</button></div></div>
+            <div class="preview-canvas-wrap"><div class="play-preview" id="playPreview" data-device="desktop" data-layout="balanced" style="--pp-bg:#101426;--pp-ink:#f5f5ff;--pp-accent:#9ba9ff;--pp-btn-ink:#15162b;--pp-art:#313a8c;--pp-radius:99px">
+              <div class="pp-nav"><span class="pp-brand" id="ppBrand">NEXORA / ORBIT</span><div class="pp-nav-links"><span>Studio</span><span>Approach</span><span>Journal</span></div><span class="pp-nav-cta" id="ppNavCta">LET’S TALK ↗</span></div>
+              <div class="pp-hero"><div class="pp-copy"><span class="pp-kicker" id="ppKicker">DIGITAL, REIMAGINED</span><h3 class="pp-title" id="ppTitle">Build beyond<br>the expected.</h3><p class="pp-sub" id="ppSub">A considered digital experience for people moving the world forward.</p><button class="pp-main-cta" id="ppButton" type="button">Explore the future <span>↗</span></button></div><div class="pp-art" id="ppArt"></div></div>
+              <div class="pp-below"><div class="pp-below-label">Made for the next chapter</div><div class="pp-feature-row"><div class="pp-feature"><i></i><strong>Clear by design</strong><small>Less friction, more focus.</small></div><div class="pp-feature"><i></i><strong>Built to adapt</strong><small>One idea, every screen.</small></div><div class="pp-feature"><i></i><strong>Ready to evolve</strong><small>Your next starts here.</small></div></div></div>
+            </div></div>
+            <div class="playground-foot"><span><span style="color:#9fe4ce">●</span> Live preview updates as you edit</span><span id="viewportLabel">Desktop · 100%</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section community" id="community">
+      <div class="wrap">
+        <div class="section-head reveal"><div><div class="eyebrow"><span class="dot"></span> DESIGN THAT TRAVELS</div><h2>Make something worth<br><span class="gradient-text">passing around.</span></h2></div><p>Remix a starting point into something unmistakably yours. Share the concept with a friend, teammate, or future client.</p></div>
+        <div class="community-grid">
+          <article class="featured-design"><div class="featured-art"><span class="featured-label">✦ FEATURED CONCEPT · WEEK 01</span><div class="featured-globe"></div></div><div class="featured-copy"><div class="eyebrow">NEXORA ORIGINAL / ORBIT</div><h3>Designing at the edge of possibility.</h3><p>A cinematic direction for studios, product launches, and teams with ambitious ideas. It’s a concept to explore—not a real community submission or customer result.</p><button class="button secondary small" id="featuredRemix">Remix this design <span class="arrow">↗</span></button></div></article>
+          <div class="community-side">
+            <article class="share-card"><div class="share-icon">⌘</div><h3>Make it yours. Share the spark.</h3><p>Save your current playground settings into a shareable link where the host supports URL-based state. The link contains design settings, not a hosted production website.</p><button class="button secondary" id="shareDesign">Copy remix link ↗</button></article>
+            <article class="share-card"><div class="share-icon">✳</div><h3>A little credit goes a long way.</h3><p>Every demo includes a small “Made with Nexora” credit concept. Remove or adapt it according to the final template license and your project needs.</p><div class="badge-demo">✳ <b>Made with Nexora</b> / Studio</div><div style="margin-top:18px"><button class="button quiet small" id="copyBadge">Copy badge text</button></div></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section inquiry" id="inquiry">
+      <div class="wrap inquiry-grid">
+        <div class="inquiry-copy"><div class="eyebrow"><span class="dot"></span> YOUR IDEA, NEXT</div><h2>Have a vision?<br><span class="gradient-text">Let’s shape it.</span></h2><p>Tell us what you’re building and what you want it to feel like. This prototype helps you prepare a clear brief; connect a form backend or CRM before using it for real client inquiries.</p><div class="inquiry-details"><div class="inquiry-detail"><i>↗</i><span>Original creative direction</span></div><div class="inquiry-detail"><i>◫</i><span>Responsive design thinking</span></div><div class="inquiry-detail"><i>✳</i><span>Scope defined before build</span></div></div></div>
+        <form class="inquiry-form" id="inquiryForm">
+          <div class="form-row"><label>Your name<input type="text" id="clientName" name="name" autocomplete="name" placeholder="Name or team" required></label><label>Your email address<input type="email" id="clientEmail" name="email" autocomplete="email" placeholder="you@company.com" required></label></div>
+          <label>Send inquiry to<input type="email" id="recipientEmail" name="recipient" placeholder="Enter your business inbox email" required></label>
+          <div class="form-row"><label>What are you building?<select id="projectType" name="project" required><option value="" disabled selected>Choose a project type</option><option>Startup / SaaS</option><option>Portfolio / Personal brand</option><option>Online store</option><option>Agency / Business website</option><option>Something experimental</option></select></label><label>Budget range<select id="budgetRange" name="budget"><option>Not sure yet</option><option>Under $500</option><option>$500–$1,500</option><option>$1,500–$5,000</option><option>$5,000+</option></select></label></div>
+          <label>Tell us about your idea<textarea id="projectBrief" name="brief" placeholder="What does it do? Who is it for? What should visitors feel or do?" required></textarea></label>
+          <button class="button primary full" type="submit">Open email to send inquiry <span class="arrow">↗</span></button>
+          <div class="form-status" id="formStatus" role="status"></div>
+          <p class="form-footnote">Opens your default email app with the brief prefilled. This is email-client based, not server-side delivery; the visitor must press Send. For automatic sending, connect a verified email provider and backend.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="wrap"><div class="footer-main"><div class="footer-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"></span><span>NEXORA <em>STUDIO</em></span></a><p>Original website concepts for ideas that deserve to be seen. Make something beautiful. Make it real.</p></div><div class="footer-links"><div class="footer-col"><strong>Explore</strong><a href="#marketplace">Template universe</a><a href="#playground">Playground</a><a href="#community">Community</a></div><div class="footer-col"><strong>Work with us</strong><a href="#inquiry">Work with us</a><a href="#inquiry">Custom projects</a><a href="#inquiry">Contact / Brief</a></div><div class="footer-col"><strong>Information</strong><a href="#inquiry" id="licenseLink">License & usage</a><a href="#home" id="topLink">Back to top ↑</a><a href="#community">About Nexora</a></div></div></div><div class="footer-bottom"><span>© 2026 NEXORA STUDIO · CONCEPT EXPERIENCE</span><span>Designed for exploration. Email uses the visitor’s email app · automatic delivery not connected.</span></div></div></footer>
+</div>
+
+<div class="compare-tray" id="compareTray"><p><span id="compareCount">0</span> selected for comparison <small>Choose up to three original concepts</small></p><div style="display:flex;gap:7px"><button class="button quiet small" id="clearCompare">Clear</button><button class="button primary small" id="openCompare">Compare now ↗</button></div></div>
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><div class="modal-head"><strong id="modalTitle">Template details</strong><button class="modal-close" id="modalClose" aria-label="Close dialog">×</button></div><div class="modal-content" id="modalContent"></div></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  'use strict';
+  const templates = [
+    {id:'orbit',name:'Orbit',category:'Aerospace',style:'aero',price:79,desc:'A cinematic launch experience for ambitious technology and aerospace brands.',tags:['Cinematic','Product launch','Responsive'],headline:'Reach beyond the known.',sub:'A new frontier for ideas too big to stay grounded.',button:'Explore the mission',brand:'ORBIT / AEROSPACE',kicker:'ENGINEERED FOR TOMORROW',bg:'#0e1c2b',ink:'#edf7ff',accent:'#a3e8f6',btnInk:'#101d28',art:'#286c93'},
+    {id:'signal',name:'Signal',category:'SaaS & AI',style:'saas',price:49,desc:'A focused, high-conviction product page for software that moves work forward.',tags:['SaaS','Product-led','Clean UI'],headline:'Make complexity simple.',sub:'Tools for teams that want to spend less time managing work and more time making progress.',button:'See how it works',brand:'SIGNAL / SYSTEMS',kicker:'A BETTER WAY TO WORK',bg:'#101426',ink:'#f5f5ff',accent:'#9ba9ff',btnInk:'#15162b',art:'#313a8c'},
+    {id:'atelier',name:'Atelier',category:'Portfolio',style:'portfolio',price:39,desc:'An art-directed portfolio for independent creatives and modern design studios.',tags:['Editorial','Portfolio','Minimal'],headline:'A point of view, made visible.',sub:'A considered portfolio for work that speaks with clarity and character.',button:'Discover the work',brand:'ATELIER / STUDIO',kicker:'INDEPENDENT BY DESIGN',bg:'#e5e6dc',ink:'#1f2a24',accent:'#546d5d',btnInk:'#fff',art:'#82958b'},
+    {id:'forma',name:'Forma Goods',category:'E-commerce',style:'shop',price:59,desc:'A warm, premium storefront concept for thoughtful products and everyday objects.',tags:['Commerce','Product-led','Warm'],headline:'Objects for better living.',sub:'Well-made essentials, chosen with intention and designed to stay.',button:'Shop the collection',brand:'FORMA / GOODS',kicker:'LESS, BUT BETTER',bg:'#f1e6d7',ink:'#2a2824',accent:'#bd7357',btnInk:'#fff9f1',art:'#9c5846'},
+    {id:'verde',name:'Verde Table',category:'Restaurants',style:'food',price:39,desc:'A sensory restaurant concept that puts seasonal ingredients and atmosphere first.',tags:['Hospitality','Menu-led','Editorial'],headline:'A table worth gathering around.',sub:'Seasonal cooking, thoughtful sourcing, and the kind of evening you remember.',button:'Reserve a table',brand:'VERDE / TABLE',kicker:'ROOTED IN THE SEASON',bg:'#1b221c',ink:'#f4f0e3',accent:'#efbf7c',btnInk:'#212016',art:'#774225'},
+    {id:'nebula',name:'Nebula Play',category:'Gaming',style:'game',price:69,desc:'A vivid, high-energy launch page for games, creators, and digital worlds.',tags:['Gaming','Immersive','Bold'],headline:'Enter your next universe.',sub:'A world of new rules, strange horizons, and stories waiting to be played.',button:'Enter the universe',brand:'NEBULA / PLAY',kicker:'YOUR WORLD. YOUR RULES.',bg:'#120d22',ink:'#fff4ff',accent:'#ff77bf',btnInk:'#211027',art:'#8739df'},
+    {id:'afterglow',name:'Afterglow',category:'Agency',style:'agency',price:59,desc:'A visual-first agency homepage built for confident creative positioning.',tags:['Agency','Campaign','Expressive'],headline:'Make a little more noise.',sub:'We turn ambitious ideas into identities and digital experiences with a pulse.',button:'Start a conversation',brand:'AFTERGLOW / CREATIVE',kicker:'CREATIVE WITH INTENTION',bg:'#171320',ink:'#f5eeff',accent:'#d4a4ff',btnInk:'#21152c',art:'#7850a4'},
+    {id:'morrow',name:'Morrow',category:'Personal Brand',style:'creator',price:29,desc:'An expressive personal brand site for writers, educators, and independent voices.',tags:['Creator','Newsletter','Personal'],headline:'Ideas for the world in motion.',sub:'A home for the notes, stories, and things worth thinking about a little longer.',button:'Read the latest',brand:'MORROW / NOTES',kicker:'THOUGHTS IN PROGRESS',bg:'#f4e9dc',ink:'#29221e',accent:'#a981c7',btnInk:'#fff',art:'#ad8b95'}
+  ];
+  const palettes = [
+    {id:'blue',name:'Arctic blue',bg:'#101426',ink:'#f5f5ff',accent:'#9ba9ff',btnInk:'#15162b',art:'#313a8c',gradient:'linear-gradient(135deg,#b4c3ff,#667be0)'},
+    {id:'mint',name:'Deep mint',bg:'#0f201f',ink:'#f1fff9',accent:'#93e8cc',btnInk:'#10231d',art:'#226b5d',gradient:'linear-gradient(135deg,#b7f3dc,#3ea894)'},
+    {id:'violet',name:'Ultraviolet',bg:'#171020',ink:'#fbf3ff',accent:'#d1a5ff',btnInk:'#24142f',art:'#6847a0',gradient:'linear-gradient(135deg,#e2c5ff,#925bda)'},
+    {id:'ember',name:'Warm ember',bg:'#211411',ink:'#fff5ef',accent:'#ffb08d',btnInk:'#2b1710',art:'#a94e3b',gradient:'linear-gradient(135deg,#ffd0ae,#e76c4c)'},
+    {id:'mono',name:'Monochrome',bg:'#141516',ink:'#f5f5f5',accent:'#dadada',btnInk:'#151515',art:'#5c6267',gradient:'linear-gradient(135deg,#f7f7f7,#8e949a)'},
+    {id:'lime',name:'Electric lime',bg:'#11180d',ink:'#f8ffe9',accent:'#d2f36b',btnInk:'#17200b',art:'#647d24',gradient:'linear-gradient(135deg,#e7ff99,#9bc82d)'}
+  ];
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+  const state = {category:'All',query:'',sort:'featured',favorites:new Set(),compare:new Set(),template:'signal',palette:'blue',device:'desktop',layout:'balanced',font:'modern',shape:'pill',energy:'balanced'};
+  let toastTimer;
+  function toast(message) { const el=$('#toast'); el.textContent=message; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),2600); }
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function templateById(id) { return templates.find(t=>t.id===id) || templates[0]; }
+  function cardPreview(t, isDetail=false) {
+    const title = t.headline.split(/[.!?]/)[0].trim().split(' ');
+    const first = title.slice(0, Math.ceil(title.length/2)).join(' ');
+    const second = title.slice(Math.ceil(title.length/2)).join(' ');
+    return `<div class="card-preview"><div class="preview-browser" style="--preview-bg:${t.bg};--preview-ink:${t.ink};--preview-accent:${t.accent};--preview-btn-ink:${t.btnInk};--preview-art:${t.art}"><div class="browser-bar"><i></i><i></i><i></i><span>NEXORA / ${escapeHtml(t.id.toUpperCase())}</span></div><div class="mock-content"><div class="mock-brand">${escapeHtml(t.brand)}<b>↗</b></div><div class="mock-title">${escapeHtml(first)}<span>${escapeHtml(second||'made visible.')}</span></div><div class="mock-sub">${escapeHtml(t.sub)}</div><span class="mock-action">${escapeHtml(t.button)} ↗</span><div class="mock-art"></div></div></div>${isDetail?'':'<div class="card-preview-shade"><span class="preview-pill">↗ Open concept</span><span class="preview-pill">Live style preview</span></div>'}</div>`;
+  }
+  function initFilters() {
+    const cats=['All',...new Set(templates.map(t=>t.category))];
+    $('#filters').innerHTML=cats.map(c=>`<button type="button" class="filter-chip ${c===state.category?'active':''}" data-category="${escapeHtml(c)}">${escapeHtml(c)}</button>`).join('');
+    $$('#filters [data-category]').forEach(b=>b.addEventListener('click',()=>{state.category=b.dataset.category; $$('#filters .filter-chip').forEach(x=>x.classList.toggle('active',x===b)); renderTemplates();}));
+  }
+  function getFiltered() {
+    let list=templates.filter(t=>(state.category==='All'||t.category===state.category) && (t.name+' '+t.category+' '+t.desc+' '+t.tags.join(' ')).toLowerCase().includes(state.query.toLowerCase()));
+    if(state.sort==='price-low') list.sort((a,b)=>a.price-b.price);
+    if(state.sort==='price-high') list.sort((a,b)=>b.price-a.price);
+    if(state.sort==='name') list.sort((a,b)=>a.name.localeCompare(b.name));
+    return list;
+  }
+  function renderTemplates() {
+    const list=getFiltered();
+    $('#resultsCount').textContent=`${list.length} original concept${list.length===1?'':'s'}`;
+    $('#templateGrid').innerHTML=list.map(t=>`<article class="template-card" data-style="${t.style}" data-id="${t.id}">${cardPreview(t)}<button class="favorite ${state.favorites.has(t.id)?'active':''}" data-fav="${t.id}" aria-label="${state.favorites.has(t.id)?'Remove':'Add'} ${escapeHtml(t.name)} ${state.favorites.has(t.id)?'from':'to'} favorites" aria-pressed="${state.favorites.has(t.id)}">${state.favorites.has(t.id)?'♥':'♡'}</button><div class="card-body"><div class="card-meta"><span class="category">${escapeHtml(t.category)}</span><span class="separator">/</span><span>Original concept</span></div><div class="card-title-row"><h3 class="card-title">${escapeHtml(t.name)}</h3></div><p class="card-desc">${escapeHtml(t.desc)}</p><div class="card-tags">${t.tags.map(tag=>`<span>${escapeHtml(tag)}</span>`).join('')}</div><div class="card-actions"><button type="button" class="button secondary small" data-details="${t.id}">View details ↗</button><button type="button" class="button primary small" data-remix="${t.id}">Customize</button></div><label class="compare-checkbox"><input type="checkbox" data-compare="${t.id}" ${state.compare.has(t.id)?'checked':''} ${!state.compare.has(t.id)&&state.compare.size>=3?'disabled':''}> Compare concept</label></div></article>`).join('');
+    $('#emptyState').hidden=list.length!==0;
+    $$('#templateGrid [data-fav]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const id=b.dataset.fav;if(state.favorites.has(id))state.favorites.delete(id);else state.favorites.add(id);renderTemplates();toast(state.favorites.has(id)?'Added to your favorites.':'Removed from your favorites.');}));
+    $$('#templateGrid [data-details]').forEach(b=>b.addEventListener('click',()=>openDetails(b.dataset.details)));
+    $$('#templateGrid [data-remix]').forEach(b=>b.addEventListener('click',()=>loadIntoPlayground(b.dataset.remix,true)));
+    $$('#templateGrid [data-compare]').forEach(b=>b.addEventListener('change',()=>{if(b.checked){if(state.compare.size>=3){b.checked=false;toast('Compare up to three concepts at a time.');return;}state.compare.add(b.dataset.compare);}else state.compare.delete(b.dataset.compare);renderCompareTray();renderTemplates();}));
+    $$('#templateGrid .card-preview').forEach(el=>el.addEventListener('click',()=>openDetails(el.closest('.template-card').dataset.id)));
+  }
+  function renderCompareTray() { $('#compareCount').textContent=state.compare.size;$('#compareTray').classList.toggle('show',state.compare.size>0); }
+  function showModal(title,html) { $('#modalTitle').textContent=title;$('#modalContent').innerHTML=html;$('#modalBackdrop').classList.add('show');document.body.style.overflow='hidden';$('#modalClose').focus(); }
+  function closeModal() { $('#modalBackdrop').classList.remove('show');document.body.style.overflow=''; }
+  function openDetails(id) {
+    const t=templateById(id);
+    showModal(`${t.name} · Original concept`, `<div class="detail-grid"><div class="detail-preview" data-style="${t.style}">${cardPreview(t,true)}</div><div class="detail-copy"><div class="eyebrow"><span class="dot"></span> ${escapeHtml(t.category)}</div><h2>${escapeHtml(t.name)}</h2><p>${escapeHtml(t.desc)}</p><div class="detail-bullets">${t.tags.map(x=>`<span>${escapeHtml(x)}</span>`).join('')}<span>Responsive layout direction</span><span>Customizable color and copy</span><span>Original design concept</span></div><button class="button primary full" id="detailCustomize">Customize this concept ↗</button><div style="height:9px"></div><button class="button secondary full" id="detailPurchase">Ask about this concept</button><div class="integration-banner"><span>ⓘ</span><span>Purchase is not active. A production checkout, final source files, and license delivery would need to be connected.</span></div><div class="detail-licence">License preview: intended terms should be stated before sale. Do not assume redistribution, white-label resale, or multi-client rights are included unless the final license explicitly grants them.</div></div></div>`);
+    $('#detailCustomize').addEventListener('click',()=>{closeModal();loadIntoPlayground(id,true);});
+    $('#detailPurchase').addEventListener('click',()=>{closeModal();document.querySelector('#inquiry').scrollIntoView({behavior:'smooth'});toast('Tell us what you need in the project inquiry.');});
+  }
+  function openCompare() {
+    if(state.compare.size<2){toast('Select at least two concepts to compare.');return;}
+    const list=[...state.compare].map(templateById);
+    const fieldRows=[['Category',t=>t.category],['Illustrative price',t=>'$'+t.price],['Best for',t=>t.desc],['Design direction',t=>t.tags.join(' · ')],['Primary action',t=>t.button],['Responsive concept',()=> 'Desktop, tablet and mobile preview direction']];
+    showModal('Compare original concepts',`<p style="color:#8f96a6;font-size:11px;line-height:1.7;margin:0 0 16px">A side-by-side look at the selected design directions. Prices shown are examples only.</p><div style="overflow:auto"><table class="compare-table"><thead><tr><th>Attribute</th>${list.map(t=>`<th>${escapeHtml(t.name)}</th>`).join('')}</tr></thead><tbody>${fieldRows.map(([label,fn])=>`<tr><td>${escapeHtml(label)}</td>${list.map(t=>`<td>${escapeHtml(fn(t))}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px">${list.map(t=>`<button class="button secondary small" data-compare-remix="${t.id}">Customize ${escapeHtml(t.name)} ↗</button>`).join('')}</div>`);
+    $$('[data-compare-remix]').forEach(b=>b.addEventListener('click',()=>{closeModal();loadIntoPlayground(b.dataset.compareRemix,true);}));
+  }
+  function initPlaygroundSelect() { $('#playTemplate').innerHTML=templates.map(t=>`<option value="${t.id}">${escapeHtml(t.name)} — ${escapeHtml(t.category)}</option>`).join('');$('#swatches').innerHTML=palettes.map(p=>`<button type="button" class="swatch ${p.id===state.palette?'active':''}" data-palette="${p.id}" title="${p.name}" aria-label="${p.name}" style="background:${p.gradient}"></button>`).join('');$$('#swatches [data-palette]').forEach(b=>b.addEventListener('click',()=>{state.palette=b.dataset.palette;$$('#swatches .swatch').forEach(x=>x.classList.toggle('active',x===b));applyPlayground();savePlayground();})); }
+  function loadIntoPlayground(id,scroll) {
+    const t=templateById(id);state.template=t.id;$('#playTemplate').value=t.id;$('#heroText').value=t.headline;$('#subText').value=t.sub;$('#buttonText').value=t.button;
+    const paletteMatch=palettes.find(p=>p.bg.toLowerCase()===t.bg.toLowerCase())||palettes[0];state.palette=paletteMatch.id;$$('#swatches .swatch').forEach(x=>x.classList.toggle('active',x.dataset.palette===state.palette));
+    state.font='modern';$('#fontSelect').value='modern';
+    applyPlayground();savePlayground();if(scroll){document.querySelector('#playground').scrollIntoView({behavior:'smooth'});toast(`${t.name} loaded into the playground.`);}
+  }
+  function getCurrentConfig() { return {template:state.template,palette:state.palette,headline:$('#heroText').value,sub:$('#subText').value,button:$('#buttonText').value,font:$('#fontSelect').value,shape:$('#buttonShape').value,layout:state.layout,energy:$('#visualEnergy').value,device:state.device}; }
+  function applyConfig(config) {
+    if(!config||typeof config!=='object')return;
+    if(config.template&&templates.some(t=>t.id===config.template)){state.template=config.template;$('#playTemplate').value=config.template;}
+    const t=templateById(state.template);
+    if(config.palette&&palettes.some(p=>p.id===config.palette))state.palette=config.palette;
+    $('#heroText').value=typeof config.headline==='string'?config.headline.slice(0,68):t.headline;
+    $('#subText').value=typeof config.sub==='string'?config.sub.slice(0,150):t.sub;
+    $('#buttonText').value=typeof config.button==='string'?config.button.slice(0,26):t.button;
+    state.font=['modern','editorial','mono'].includes(config.font)?config.font:'modern';$('#fontSelect').value=state.font;
+    state.shape=['pill','soft','sharp'].includes(config.shape)?config.shape:'pill';$('#buttonShape').value=state.shape;
+    state.layout=['balanced','editorial','centered'].includes(config.layout)?config.layout:'balanced';state.energy=['calm','balanced','bold'].includes(config.energy)?config.energy:'balanced';$('#visualEnergy').value=state.energy;
+    state.device=['desktop','tablet','mobile'].includes(config.device)?config.device:'desktop';
+    $$('#layoutSwitch button').forEach(b=>b.classList.toggle('active',b.dataset.layout===state.layout));$$('.device-switch button').forEach(b=>b.classList.toggle('active',b.dataset.device===state.device));$$('#swatches .swatch').forEach(b=>b.classList.toggle('active',b.dataset.palette===state.palette));
+    applyPlayground();
+  }
+  function applyPlayground() {
+    const t=templateById(state.template), p=palettes.find(x=>x.id===state.palette)||palettes[0];
+    const preview=$('#playPreview');
+    const combined={bg:p.bg,ink:p.ink,accent:p.accent,btnInk:p.btnInk,art:p.art};
+    preview.style.setProperty('--pp-bg',combined.bg);preview.style.setProperty('--pp-ink',combined.ink);preview.style.setProperty('--pp-accent',combined.accent);preview.style.setProperty('--pp-btn-ink',combined.btnInk);preview.style.setProperty('--pp-art',combined.art);
+    preview.style.setProperty('--pp-radius',state.shape==='pill'?'99px':state.shape==='soft'?'10px':'2px');
+    preview.dataset.layout=state.layout;preview.dataset.device=state.device;preview.dataset.energy=state.energy;
+    const font=state.font==='editorial'?'Georgia, "Times New Roman", serif':state.font==='mono'?'ui-monospace, SFMono-Regular, Menlo, monospace':'Inter, ui-sans-serif, system-ui, sans-serif';
+    preview.style.fontFamily=font;$('#ppTitle').style.fontFamily=font;$('#ppTitle').style.fontWeight=state.font==='editorial'?'500':'750';$('#ppTitle').style.letterSpacing=state.font==='editorial'?'-0.045em':'-.075em';
+    const title=$('#heroText').value||'Your idea, made visible.';
+    $('#ppTitle').textContent=title;$('#ppSub').textContent=$('#subText').value||'A clear, considered digital experience for your next chapter.';$('#ppButton').firstChild.textContent=$('#buttonText').value||'Explore the future';
+    $('#ppBrand').textContent=t.brand;$('#ppKicker').textContent=t.kicker;$('#ppNavCta').textContent='LET’S TALK ↗';$('#stageUrl').textContent=`nexora.studio / preview / ${t.id}`;
+    const energy=state.energy==='calm'?'.72':state.energy==='bold'?'1.18':'1';$('#ppArt').style.transform=`rotate(-8deg) scale(${energy})`;
+    $('#viewportLabel').textContent=`${state.device.charAt(0).toUpperCase()+state.device.slice(1)} · ${state.device==='desktop'?'100%':state.device==='tablet'?'78%':'Mobile'}`;
+  }
+  function savePlayground(){try{localStorage.setItem('nexora-playground-v1',JSON.stringify(getCurrentConfig()));}catch(e){}}
+  function resetPlayground() { state.template='signal';state.palette='blue';state.layout='balanced';state.font='modern';state.shape='pill';state.energy='balanced';$('#playTemplate').value='signal';$('#heroText').value=templateById('signal').headline;$('#subText').value=templateById('signal').sub;$('#buttonText').value=templateById('signal').button;$('#fontSelect').value='modern';$('#buttonShape').value='pill';$('#visualEnergy').value='balanced';$$('#layoutSwitch button').forEach(b=>b.classList.toggle('active',b.dataset.layout==='balanced'));$$('.device-switch button').forEach(b=>b.classList.toggle('active',b.dataset.device==='desktop'));$$('#swatches .swatch').forEach(b=>b.classList.toggle('active',b.dataset.palette==='blue'));state.device='desktop';applyPlayground();savePlayground();toast('Playground reset to the Signal concept.'); }
+  async function copyText(text, success) { try { if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(text); else {const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();if(!ok)throw new Error('copy unavailable');}toast(success); } catch(e) { toast('Copy is unavailable here. Select and copy the text manually.'); } }
+  function makeShareUrl() {
+    const payload=btoa(unescape(encodeURIComponent(JSON.stringify(getCurrentConfig())))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    const url=new URL(window.location.href);url.hash='nexora='+payload;return url.toString();
+  }
+  function loadShareFromHash() {
+    const match=window.location.hash.match(/(?:^#|&)nexora=([^&]+)/);if(!match)return false;
+    try {let v=match[1].replace(/-/g,'+').replace(/_/g,'/');while(v.length%4)v+='=';const config=JSON.parse(decodeURIComponent(escape(atob(v))));applyConfig(config);return true;}catch(e){return false;}
+  }
+  function initEvents() {
+    $('#searchInput').addEventListener('input',e=>{state.query=e.target.value.trim();renderTemplates();});
+    $('#sortSelect').addEventListener('change',e=>{state.sort=e.target.value;renderTemplates();});
+    $('#menuToggle').addEventListener('click',()=>{const open=$('#navLinks').classList.toggle('open');$('#menuToggle').setAttribute('aria-expanded',String(open));$('#menuToggle').textContent=open?'×':'☰';});
+    $$('#navLinks a').forEach(a=>a.addEventListener('click',()=>{$('#navLinks').classList.remove('open');$('#menuToggle').setAttribute('aria-expanded','false');$('#menuToggle').textContent='☰';}));
+    $('#playTemplate').addEventListener('change',e=>loadIntoPlayground(e.target.value,false));
+    ['heroText','subText','buttonText'].forEach(id=>$('#'+id).addEventListener('input',()=>{applyPlayground();savePlayground();}));
+    ['kickerText','navCtaText'].forEach(id=>$('#'+id).addEventListener('input',()=>{const k=$('#kickerText').value.trim()||'DIGITAL, REIMAGINED';const n=$('#navCtaText').value.trim()||'LET’S TALK ↗';$('#ppKicker').textContent=k;$('#ppNavCta').textContent=n;savePlayground();}));
+    $('#surfaceStyle').addEventListener('change',()=>{$('#playPreview').dataset.surface=$('#surfaceStyle').value;});
+    $('#contentWidth').addEventListener('change',()=>{$('#playPreview').dataset.width=$('#contentWidth').value;});
+    $('#fontSelect').addEventListener('change',e=>{state.font=e.target.value;applyPlayground();savePlayground();});
+    $('#buttonShape').addEventListener('change',e=>{state.shape=e.target.value;applyPlayground();savePlayground();});
+    $('#visualEnergy').addEventListener('change',e=>{state.energy=e.target.value;applyPlayground();savePlayground();});
+    $$('#layoutSwitch button').forEach(b=>b.addEventListener('click',()=>{state.layout=b.dataset.layout;$$('#layoutSwitch button').forEach(x=>x.classList.toggle('active',x===b));applyPlayground();savePlayground();}));
+    $$('.device-switch button').forEach(b=>b.addEventListener('click',()=>{state.device=b.dataset.device;$$('.device-switch button').forEach(x=>x.classList.toggle('active',x===b));applyPlayground();savePlayground();}));
+    $('#resetPlayground').addEventListener('click',resetPlayground);
+    $('#remixButton').addEventListener('click',()=>{const url=makeShareUrl();copyText(url,'Remix settings link copied. It needs a compatible host to reopen.');});
+    $('#featuredRemix').addEventListener('click',()=>loadIntoPlayground('orbit',true));
+    $('#shareDesign').addEventListener('click',()=>copyText(makeShareUrl(),'Remix link copied. It includes your current design settings.'));
+    $('#copyBadge').addEventListener('click',()=>copyText('Made with Nexora Studio','Badge text copied.'));
+    $('#clearCompare').addEventListener('click',()=>{state.compare.clear();renderCompareTray();renderTemplates();});
+    $('#openCompare').addEventListener('click',openCompare);
+    $('#modalClose').addEventListener('click',closeModal);
+    $('#modalBackdrop').addEventListener('click',e=>{if(e.target===$('#modalBackdrop'))closeModal();});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+    $$('[data-checkout]').forEach(b=>b.addEventListener('click',()=>toast(`${b.dataset.checkout} checkout is not connected. No payment was taken.`)));
+    $('#licenseLink').addEventListener('click',e=>{e.preventDefault();showModal('License overview',`<h2 style="font-size:24px;letter-spacing:-.05em;margin:0 0 12px">License should be explicit.</h2><p style="color:#9ba2b1;font-size:12px;line-height:1.8">This is a marketplace concept, not a final license agreement. Before accepting payments, publish terms covering permitted personal and commercial projects, client work, redistribution, resale and white-label rights, template modification, third-party assets, updates, support and refunds. Do not claim resale rights unless you own or have licensed every included component.</p><div class="integration-banner"><span>ⓘ</span><span>All template concepts shown here are original demo compositions created for this prototype. They are not downloadable source packages at present.</span></div>`);});
+    $('#inquiryForm').addEventListener('submit',e=>{e.preventDefault();const name=$('#clientName').value.trim(),email=$('#clientEmail').value.trim(),recipient=$('#recipientEmail').value.trim(),type=$('#projectType').value,budget=$('#budgetRange').value,brief=$('#projectBrief').value.trim();if(!name||!email||!recipient||!type||!brief){toast('Please complete all required fields.');return;}const subject=encodeURIComponent(`NEXORA STUDIO project inquiry — ${type}`);const body=encodeURIComponent(`NEXORA STUDIO — PROJECT INQUIRY\nName: ${name}\nReply email: ${email}\nProject: ${type}\nBudget: ${budget}\n\nBrief:\n${brief}`);$('#formStatus').textContent='Your email app should open with the inquiry prepared. Review it and press Send. If nothing opens, copy your brief or check your browser email-app settings.';$('#formStatus').classList.add('show');window.location.href=`mailto:${encodeURIComponent(recipient)}?subject=${subject}&body=${body}`;});
+    $('#ppButton').addEventListener('click',()=>toast('This is a live style preview. Add a destination to your final website.'));
+    window.addEventListener('hashchange',()=>loadShareFromHash());
+  }
+  function initReveal() { const els=$$('.reveal'); if('IntersectionObserver' in window){const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}}),{threshold:.12});els.forEach(el=>obs.observe(el));}else els.forEach(el=>el.classList.add('visible')); }
+  function init() {
+    initFilters();renderTemplates();initPlaygroundSelect();
+    const shareLoaded=loadShareFromHash();
+    if(!shareLoaded){try{const saved=JSON.parse(localStorage.getItem('nexora-playground-v1')||'null');if(saved)applyConfig(saved);else applyPlayground();}catch(e){applyPlayground();}}
+    initEvents();renderCompareTray();initReveal();
+  }
+  init();
+})();
+</script>
+</body>
+</html>
